@@ -1,36 +1,176 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🛒 SmartStore
 
-## Getting Started
+Навчальний проєкт з дисципліни **«Компонентне програмування для веб»**.  
+Реалізовано на основі:
 
-First, run the development server:
+- Next.js (App Router)
+- React
+- React-Bootstrap
+- Firebase Authentication
+- Firestore (планується для продуктів)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+---
+
+## 🎯 Мета проєкту
+
+SmartStore — це демонстраційний інтернет-магазин електроніки, який показує:
+
+- побудову компонентної архітектури
+- роботу з React Context
+- інтеграцію Firebase Auth
+- організацію маршрутизації у Next.js
+- розділення Server та Client компонентів
+
+---
+
+## 🏗 Архітектура проєкту
+
+```
+src/
+  app/                # Routing layer (Next.js App Router)
+    layout.jsx        # HTML shell
+    page.jsx          # Головна сторінка
+    login/
+    dashboard/
+    products/
+    cart/
+
+  components/         # UI компоненти
+    AppNavbar.jsx
+    AppFooter.jsx
+
+  context/            # Глобальний стан
+    AuthContext.jsx
+
+  lib/                # Ініціалізація SDK
+    firebaseClient.js
+
+  services/           # Робота з API / Firestore (планується)
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.jsx`. The page auto-updates as you edit the file.
+## 🚀 Запуск проєкту
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 1️⃣ Встановити залежності
 
-## Learn More
+```
+npm install
+```
 
-To learn more about Next.js, take a look at the following resources:
+### 2️⃣ Створити файл `.env.local`
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+У корені проєкту:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```
+NEXT_PUBLIC_FIREBASE_API_KEY=...
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=...
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=...
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=...
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=...
+NEXT_PUBLIC_FIREBASE_APP_ID=...
+```
 
-## Deploy on Vercel
+⚠ Після зміни `.env.local` потрібно перезапустити сервер.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 3️⃣ Запуск development-сервера
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```
+npm run dev
+```
+
+Відкрити в браузері:
+
+```
+http://localhost:3000
+```
+
+---
+
+## 🔐 Firebase Authentication
+
+Підтримується:
+
+- Email / Password
+- Google Sign-In
+
+Auth реалізовано через:
+
+```
+AuthContext → AuthProvider → useAuth()
+```
+
+Приклад використання:
+
+```
+const { user, logout } = useAuth();
+```
+
+---
+
+## 🧠 Як працює глобальний стан
+
+```
+RootLayout
+   ↓
+Providers
+   ↓
+AuthProvider
+   ↓
+Page components
+```
+
+Context забезпечує доступ до користувача у будь-якому компоненті без передачі props.
+
+---
+
+## 🌐 CSR vs SSR
+
+SmartStore використовує гібридну модель:
+
+- 🔵 Auth → Client Side Rendering
+- 🟢 Products (можливо) → Server Side Rendering
+- 🟣 Гідрація після завантаження HTML
+
+---
+
+## 🧩 Використані технології
+
+- Next.js 13+ (App Router)
+- React Context API
+- React-Bootstrap
+- Firebase SDK
+
+---
+
+## 📚 Освітня цінність
+
+Проєкт демонструє:
+
+- розділення шарів (UI / Logic / Services)
+- роботу з глобальним станом
+- захищені маршрути
+- інтеграцію стороннього сервісу (Firebase)
+- принципи clean architecture
+
+---
+
+## 🔮 Подальший розвиток
+
+Планується реалізувати:
+
+- Firestore для продуктів
+- Ролі користувачів (admin / user)
+- Адмін-панель
+- Кошик покупця
+- Middleware для захисту маршрутів
+- Розгортання на Firebase Hosting або Vercel
+
+---
+
+## 👨‍🏫 Автор
+
+Навчальний проєкт для дисципліни  
+**«Компонентне програмування для веб»**
+
+---
